@@ -9,7 +9,6 @@ public:
 	~Particle();
 
 	void update(double t);
-	void integrate(double t);
 private:
 	Vector3 v;
 	Vector3 p;
