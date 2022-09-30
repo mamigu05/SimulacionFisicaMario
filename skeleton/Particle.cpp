@@ -1,13 +1,13 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damp)
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damp, double size, Vector4 color)
 {
 	v = vel;
 	a = acc;
 	damping = damp;
 
 	pose = physx::PxTransform(pos.x, pos.y, pos.z);
-	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(6.0)), &pose, { 1.0, 0.5, 0.0, 1.0 });
+	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(size)), &pose, color);
 }
 
 Particle::~Particle()

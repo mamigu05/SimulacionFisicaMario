@@ -97,12 +97,12 @@ void cleanupPhysics(bool interactive)
 		delete particles[i];
 }
 
-void shoot()
+void shoot(Vector4 color, Vector3 acc, double velD, double damping, double size)
 {
 	Vector3 pos = GetCamera()->getEye();
-	Vector3 vel = Vector3(50.0, 0.0, 0.0);
-	Vector3 acc = Vector3(0.0, -3.0, 0.0);
-	particles.push_back(new Particle(pos, vel, acc, 0.99));
+	Vector3 vel = GetCamera()->getDir() * velD;
+	//Vector3 acc = Vector3(0.0, -3.0, 0.0);
+	particles.push_back(new Particle(pos, vel, acc, damping, size, color));
 }
 
 // Function called when a key is pressed
@@ -116,7 +116,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case '1':
 	{
-		shoot();
+		shoot({ 1.0, 1.0, 0.0, 1.0 }, Vector3(0.0, -3.0, 0.0), 50, 0.99, 1.0);
+		break;
+	}
+	case '2':
+	{
+		shoot({ 0.1, 0.1, 0.1, 1.0 }, Vector3(0.0, -6.0, 0.0), 35, 0.99, 4.0);
+		break;
+	}
+	case '3':
+	{
+		shoot({ 1.0, 0.5, 0.0, 1.0 }, Vector3(0.0, 0.1, 0.0), 5, 0.99, 1.0);
 		break;
 	}
 	default:

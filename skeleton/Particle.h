@@ -4,18 +4,18 @@
 
 class Particle
 {
-public:
-	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damping);
-	~Particle();
-
-	void update(double t);
 private:
+	physx::PxTransform pose;
+	RenderItem* renderItem;
+
 	Vector3 v;
-	Vector3 p;
 	Vector3 a;
 
 	double damping;
-	physx::PxTransform pose;
-	RenderItem* renderItem;
+public:
+	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damping, double size, Vector4 color);
+	~Particle();
+
+	void update(double t);
 };
 
