@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RenderUtils.hpp"
+#include <list>
 
 class Particle
 {
@@ -17,5 +18,18 @@ public:
 	~Particle();
 
 	void update(double t);
+	virtual Particle* clone() const;
+};
+
+class ParticleSystem
+{
+protected:
+	std::list<Particle*> _particles;
+	//std::list<ParticleGenerator*> _particleGenerators;
+	Vector3 _gravity;
+public:
+	void update(double t);
+	//ParticleGenerator* getParticleGenerator(string name);
+	void generateFireworkSystem();
 };
 
