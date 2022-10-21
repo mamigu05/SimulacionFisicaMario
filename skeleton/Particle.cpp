@@ -31,13 +31,13 @@ ParticleSystem::ParticleSystem()
 
 void ParticleSystem::update(double t)
 {
-	v = Vector3((rand() % 72 - 36), 30, (rand() % 72 - 36));
+	v = Vector3((rand() % 50 - 25), 25, (rand() % 50 - 25));
 
-	_particles.push_back(new Particle(Vector3(0.0, 0.0, 0.0), v, Vector3(0, -9.8, 0), 0.99, 1.0, { 1.0, 1.0, 0.0, 1.0 }, 50));
+	_particles.push_back(new Particle(Vector3(0.0, 0.0, 0.0), v, Vector3(0, -9.8, 0), 0.99, 1.0, { 1.0, 1.0, 0.0, 1.0 }, 25));
 
 	for (Particle* p : _particles) {
 		p->update(t);
-		if (p->pose.p.y < -10)
+		if (p->pose.p.y < -20)
 			_particlesToDelete.emplace_back(p);
 	}
 
@@ -47,4 +47,11 @@ void ParticleSystem::update(double t)
 	}
 
 	_particlesToDelete.clear();
+}
+
+bool Firework::update(double t)
+{
+	Particle::update(t);
+	age -= t;
+	return (age < 0);
 }

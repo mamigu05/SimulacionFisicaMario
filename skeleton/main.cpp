@@ -31,7 +31,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 //Particle* gParticle = NULL;
-vector<Particle*>		particles;
+//vector<Particle*>		particles;
+ParticleSystem*         particles = NULL;
 
 
 
@@ -51,6 +52,7 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	//gParticle = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 5.0, 3.0), Vector3(0.0, 2.0, 2.0), 0.99);
+	particles = new ParticleSystem();
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -72,8 +74,9 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 	//gParticle->update(t);
-	for (int i = 0; i < particles.size(); i++)
-		particles[i]->update(t);
+	/*for (int i = 0; i < particles.size(); i++)
+		particles[i]->update(t);*/
+	particles->update(t);
 }
 
 // Function to clean data
@@ -93,8 +96,9 @@ void cleanupPhysics(bool interactive)
 	
 	gFoundation->release();
 	//delete gParticle;
-	for (int i = 0; i < particles.size(); i++)
-		delete particles[i];
+	/*for (int i = 0; i < particles.size(); i++)
+		delete particles[i];*/
+	//delete particles;
 }
 
 void shoot(Vector4 color, Vector3 acc, double velD, double damping, double size)
@@ -102,7 +106,7 @@ void shoot(Vector4 color, Vector3 acc, double velD, double damping, double size)
 	Vector3 pos = GetCamera()->getEye();
 	Vector3 vel = GetCamera()->getDir() * velD;
 	//Vector3 acc = Vector3(0.0, -3.0, 0.0);
-	particles.push_back(new Particle(pos, vel, acc, damping, size, color));
+	//particles.push_back(new Particle(pos, vel, acc, damping, size, color));
 }
 
 // Function called when a key is pressed

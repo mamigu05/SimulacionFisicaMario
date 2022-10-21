@@ -22,7 +22,15 @@ public:
 	~Particle();
 
 	void update(double t);
-	virtual Particle* clone() const;
+	//virtual Particle* clone() const;
+};
+
+class Firework : public Particle
+{
+public:
+	double age;
+	Firework() : Particle(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.99, 1.0, { 1.0, 1.0, 0.0, 1.0 }, 25) {};
+	bool update(double t);
 };
 
 class ParticleSystem
@@ -32,7 +40,6 @@ protected:
 	list<Particle*> _particles;
 	list<Particle*> _particlesToDelete;
 	//std::list<ParticleGenerator*> _particleGenerators;
-	Vector3 _gravity;
 public:
 	ParticleSystem();
 	void update(double t);
