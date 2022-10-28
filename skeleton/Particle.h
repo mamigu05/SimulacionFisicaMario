@@ -108,9 +108,9 @@ class Fireworks
 			firework->age = age / 100;
 			double t = 1.0;
 			if (type == 0)
-				t = 1;
-			else if (type == 2)
 				t = 0;
+			else if (type == 2)
+				t = 1;
 			Vector4 color = Vector4((float)(rand() % 11) / 10, (float)(rand() % 11) / 10, (float)(rand() % 11) / 10, t);
 			firework->setColor(color);
 			Vector3 v;
@@ -124,8 +124,8 @@ class Fireworks
 			}
 			else
 			{
-				firework->pose = physx::PxTransform(10.0f, 10.0f, 10.0f);
-				v = Vector3((rand() % (maxVelocity / 2) - (minVelocity / 2)) / 10, 15, (rand() % (maxVelocity / 2) - (minVelocity / 2)) / 10);
+				firework->pose = physx::PxTransform(15.0, 15.0f, 15.0f);
+				v = Vector3((rand() % (maxVelocity / 2) - (minVelocity / 2)), 15, (rand() % (maxVelocity / 2) - (minVelocity / 2)));
 			}
 			firework->v = v;
 		}
@@ -151,7 +151,7 @@ public:
 	//Método que actualiza los fuegos artificiales
 	void fireworksUpdate(double t);
 	//Método que dispara un nuevo firework
-	void createFirework() { fireworksCreate(Payload(1, 1)); };
+	void createFirework() { fireworksCreate(Payload(1, 3)); };
 };
 
 class ParticleSystem

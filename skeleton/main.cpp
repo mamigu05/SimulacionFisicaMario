@@ -138,7 +138,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		shoot({ 1.0, 0.5, 0.0, 1.0 }, Vector3(0.0, 0.1, 0.0), 5, 0.99, 1.0);
 		break;
 	}
-	case 'T':
+	case '4':
 	{
 		gFirework->createFirework();
 		break;

@@ -68,11 +68,11 @@ void Fireworks::createFireworkRules()
 		rules.push_back(new FireworkRule());
 
 	//Ceniza
-	rules[0]->setParameters(0, 5, 8, 0.8, 2, 5, Payload(1, 1));
+	rules[0]->setParameters(0, 5, 8, 0.8, 2, 0.99, Payload(1, 1));
 	//Cohete
-	rules[1]->setParameters(1, 2, 5, 0.99, 10, 20, Payload(2, 35));
+	rules[1]->setParameters(1, 1, 3, 0.99, 10, 0.99, Payload(2, 35));
 	//Explosión
-	rules[2]->setParameters(2, 1, 3, 0.5, -5, 15, Payload(0, 1));
+	rules[2]->setParameters(2, 1, 3, 0.5, -5, 0.99, Payload(0, 1));
 
 	createFirework();
 }
