@@ -5,6 +5,7 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damp, double _s
 {
 	color = _color;
 	pose = physx::PxTransform(pos.x, pos.y, pos.z);
+	force = Vector3(0, 0, 0);
 	renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(size)), &pose, color);
 	//death = GetCurrentTime() + time;
 }
@@ -18,6 +19,17 @@ Particle::~Particle()
 //Método que actualiza los vectores de la partícula
 void Particle::update(double t)
 {
+	/*if (inverse_mass <= 0.0f)
+		return;
+	pose.p += v * t;
+
+	Vector3 totalAcceleration = a;
+	totalAcceleration += force * inverse_mass;
+
+	v += totalAcceleration * t;
+	v *= powf(damping, t);
+
+	clearForce();*/
 	pose = physx::PxTransform(pose.p.x + v.x * t, pose.p.y + v.y * t, pose.p.z + v.z * t);
 	v += a * t;
 	v *= powf(damping, t);

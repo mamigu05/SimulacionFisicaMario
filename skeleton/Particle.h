@@ -14,6 +14,7 @@ private:
 	Vector4 color;
 	//Vector de aceleración de la partícula
 	Vector3 a;
+	Vector3 force;
 	//Indice de la fuerza de refracción
 	double damping;
 	//Tiempo, muerte, índice inverso de la masa y tamaño de la partícula
@@ -32,6 +33,9 @@ public:
 	void update(double t);
 	//Método que asigna un color a la partícula
 	void setColor(Vector4 _color);
+
+	void clearForce() { force *= 0; };
+	void addForce(const Vector3& f) { force += f; };
 };
 
 const enum tipos { FIREWORK, SMOKE, EXPLOSION, FW_UNKNOWN_TYPE };
