@@ -19,7 +19,7 @@ Particle::~Particle()
 //Método que actualiza los vectores de la partícula
 void Particle::update(double t)
 {
-	/*if (inverse_mass <= 0.0f)
+	if (inverse_mass <= 0.0f)
 		return;
 	pose.p += v * t;
 
@@ -29,10 +29,10 @@ void Particle::update(double t)
 	v += totalAcceleration * t;
 	v *= powf(damping, t);
 
-	clearForce();*/
-	pose = physx::PxTransform(pose.p.x + v.x * t, pose.p.y + v.y * t, pose.p.z + v.z * t);
+	clearForce();
+	/*pose = physx::PxTransform(pose.p.x + v.x * t, pose.p.y + v.y * t, pose.p.z + v.z * t);
 	v += a * t;
-	v *= powf(damping, t);
+	v *= powf(damping, t);*/
 }
 
 //Método que asigna un color a la partícula

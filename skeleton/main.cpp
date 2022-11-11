@@ -53,10 +53,10 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	//gParticle = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 5.0, 3.0), Vector3(0.0, 2.0, 2.0), 0.99);
-	//particles = new ParticleSystem();
+	particles = new ParticleSystem();
 
-	gFirework = new Fireworks();
-	gFirework->createFireworkRules();
+	/*gFirework = new Fireworks();
+	gFirework->createFireworkRules();*/
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -80,8 +80,8 @@ void stepPhysics(bool interactive, double t)
 	//gParticle->update(t);
 	/*for (int i = 0; i < particles.size(); i++)
 		particles[i]->update(t);*/
-	//particles->update(t);
-	gFirework->fireworksUpdate(t);
+	particles->update(t);
+	//gFirework->fireworksUpdate(t);
 }
 
 // Function to clean data
@@ -103,7 +103,7 @@ void cleanupPhysics(bool interactive)
 	//delete gParticle;
 	/*for (int i = 0; i < particles.size(); i++)
 		delete particles[i];*/
-	//delete particles;
+	delete particles;
 }
 
 void shoot(Vector4 color, Vector3 acc, double velD, double damping, double size)

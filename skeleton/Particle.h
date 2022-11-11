@@ -33,6 +33,8 @@ public:
 	void update(double t);
 	//Método que asigna un color a la partícula
 	void setColor(Vector4 _color);
+	bool hasFiniteMass() { return(inverse_mass > 0); }
+	double getMass() { return inverse_mass; }
 
 	void clearForce() { force *= 0; };
 	void addForce(const Vector3& f) { force += f; };
