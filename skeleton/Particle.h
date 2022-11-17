@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RenderUtils.hpp"
+#include "Generator.h"
 #include <list>
 
 using namespace std;
@@ -8,30 +9,35 @@ using namespace std;
 class Particle
 {
 private:
-	//RenderItem de la partícula
+	//RenderItem de la partï¿½cula
 	RenderItem* renderItem;
-	//Vector de colores de la partícula
+	//Vector de colores de la partï¿½cula
 	Vector4 color;
-	//Vector de aceleración de la partícula
+	//Vector de aceleraciï¿½n de la partï¿½cula
 	Vector3 a;
 	Vector3 force;
-	//Indice de la fuerza de refracción
+	//Indice de la fuerza de refracciï¿½n
 	double damping;
-	//Tiempo, muerte, índice inverso de la masa y tamaño de la partícula
+	//Tiempo, muerte, ï¿½ndice inverso de la masa y tamaï¿½o de la partï¿½cula
 	double remaining_time;
 	double death, inverse_mass, size;
 public:
-	//Vector de la posición de la partícula
+	//Vector de la posiciï¿½n de la partï¿½cula
 	physx::PxTransform pose;
-	//Vector de la velocidad de la partícula
+	//Vector de la velocidad de la partï¿½cula
 	Vector3 v;
+
+	bool gravedad = false;
+	bool viento = false;
+	bool explosion = false;
+	bool deleteReg = false;
 	//Constructora de la clase Particle
 	Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damping, double _size, Vector4 _color, double inverse);
 	//Destructora de la clase Particle
 	~Particle();
-	//Método que actualiza los vectores de la partícula
+	//Mï¿½todo que actualiza los vectores de la partï¿½cula
 	void update(double t);
-	//Método que asigna un color a la partícula
+	//Mï¿½todo que asigna un color a la partï¿½cula
 	void setColor(Vector4 _color);
 	bool hasFiniteMass() { return(inverse_mass > 0); }
 	double getMass() { return inverse_mass; }
@@ -45,21 +51,21 @@ const enum tipos { FIREWORK, SMOKE, EXPLOSION, FW_UNKNOWN_TYPE };
 class Firework : public Particle
 {
 public:
-	//Vida de la partícula
+	//Vida de la partï¿½cula
 	double age;
-	//Tipo de la partícula
+	//Tipo de la partï¿½cula
 	unsigned type;
 	//Constructora de la clase Firework
 	Firework() : Particle(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), 0.99, 1.0, Vector4(1.0, 1.0, 0.0, 1.0), 9.99) {};
-	//Método que actualiza la vida y decide si muere o no
+	//Mï¿½todo que actualiza la vida y decide si muere o no
 	bool update(double t);
-	//Método que comprueba si la partícula está activa
+	//Mï¿½todo que comprueba si la partï¿½cula estï¿½ activa
 	bool isActive() const { return type != FW_UNKNOWN_TYPE; };
-	//Método que desactiva la partícula
+	//Mï¿½todo que desactiva la partï¿½cula
 	void setInactive() { type = FW_UNKNOWN_TYPE; };
 };
 
-class Fireworks
+class Fireworks : public Generator
 {
 	//Struct que guarda la carga de Firework
 	struct Payload
@@ -78,18 +84,18 @@ class Fireworks
 	//Struct que configura las reglas de Firework
 	struct FireworkRule
 	{
-		//Tipo de la partícula de Firework
+		//Tipo de la partï¿½cula de Firework
 		unsigned type;
-		//Rango de vida de la partícula
+		//Rango de vida de la partï¿½cula
 		int minAge, maxAge;
-		//Velocidad de la partícula
+		//Velocidad de la partï¿½cula
 		int minVelocity, maxVelocity;
-		//Damping de la partícula
+		//Damping de la partï¿½cula
 		double damping;
 		//Vector de payloads
 		vector<Payload> payloads;
 
-		//Método que atribuye valores a una regla
+		//Mï¿½todo que atribuye valores a una regla
 		void setParameters(unsigned _type, int _min, int _max, int _minVel, int _maxVel, double _damping, Payload _payload)
 		{
 			type = _type;
@@ -101,7 +107,7 @@ class Fireworks
 			payloads.push_back(_payload);
 		}
 
-		//Método que atribuye valores a un nuevo Firework
+		//Mï¿½todo que atribuye valores a un nuevo Firework
 		void create(Firework* firework, Payload payload, const Firework* parent = nullptr) const
 		{
 			firework->type = type;
@@ -138,29 +144,30 @@ class Fireworks
 	};
 
 private:
-	//Vector que guarda las reglas de las partículas
+	//Vector que guarda las reglas de las partï¿½culas
 	vector<FireworkRule*> rules;
 	//Vector que guarda los fireworks creados
 	vector<Firework*> fireworks;
 
 public:
-	//Método que inicializa las reglas y dispara un firework
+	Fireworks() { Generator::addGenerator(this); }
+	//Mï¿½todo que inicializa las reglas y dispara un firework
 	void createFireworkRules();
-	//Método que elimina los punteros a firework
+	//Mï¿½todo que elimina los punteros a firework
 	void deleteFireworks();
-	//Método que crea un puntero a un firework nuevo vacío
+	//Mï¿½todo que crea un puntero a un firework nuevo vacï¿½o
 	Firework* allocNewFirework();
-	//Método que crea un firework
+	//Mï¿½todo que crea un firework
 	void fireworksCreate(Payload p, const Firework* parent = nullptr);
-	//Método que devuelva la regla de un tipo
+	//Mï¿½todo que devuelva la regla de un tipo
 	FireworkRule* getRuleFromType(int type) { return rules[type]; };
-	//Método que actualiza los fuegos artificiales
+	//Mï¿½todo que actualiza los fuegos artificiales
 	void fireworksUpdate(double t);
-	//Método que dispara un nuevo firework
+	//Mï¿½todo que dispara un nuevo firework
 	void createFirework() { fireworksCreate(Payload(1, 3)); };
 };
 
-class ParticleSystem
+class ParticleSystem : public Generator
 {
 protected:
 	Vector3 v;
@@ -168,9 +175,26 @@ protected:
 	list<Particle*> _particlesToDelete;
 	//std::list<ParticleGenerator*> _particleGenerators;
 public:
-	ParticleSystem();
+	ParticleSystem() { Generator::addGenerator(this); }
+	~ParticleSystem() { Generator::erase(); }
 	void update(double t);
-	//ParticleGenerator* getParticleGenerator(string name);
-	void generateFireworkSystem();
+};
+
+const enum {BLUE_GRAVITY, RED_GRAVITY, YELLOW_GRAVITY};
+class Forces : public Generator
+{
+private:
+	Vector3 v;
+	Vector4 color;
+	list<Particle*> particlesToDelete;
+	bool create;
+	double timer;
+	int type;
+public:
+	Forces(int _type) : type(_type) { Generator::addGenerator(this); create = true; timer = 125; }
+	~Forces() {};
+	void update(double t);
+
+	list<Particle*> particles;
 };
 

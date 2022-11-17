@@ -8,6 +8,7 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Particle.h"
+#include "Scene.h"
 
 #include <iostream>
 
@@ -34,6 +35,8 @@ ContactReportCallback gContactReportCallback;
 //vector<Particle*>		particles;
 ParticleSystem*         particles = NULL;
 Fireworks*				gFirework = NULL;
+Scene*                  fScene = NULL;
+
 
 
 
@@ -53,7 +56,10 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	//gParticle = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 5.0, 3.0), Vector3(0.0, 2.0, 2.0), 0.99);
-	particles = new ParticleSystem();
+	//particles = new ParticleSystem();
+
+	fScene = new Scene();
+	fScene->createScene3();
 
 	/*gFirework = new Fireworks();
 	gFirework->createFireworkRules();*/
@@ -80,8 +86,9 @@ void stepPhysics(bool interactive, double t)
 	//gParticle->update(t);
 	/*for (int i = 0; i < particles.size(); i++)
 		particles[i]->update(t);*/
-	particles->update(t);
+	//particles->update(t);
 	//gFirework->fireworksUpdate(t);
+	fScene->update(t);
 }
 
 // Function to clean data
@@ -103,7 +110,8 @@ void cleanupPhysics(bool interactive)
 	//delete gParticle;
 	/*for (int i = 0; i < particles.size(); i++)
 		delete particles[i];*/
-	delete particles;
+	//delete particles;
+	delete fScene; fScene = nullptr;
 }
 
 void shoot(Vector4 color, Vector3 acc, double velD, double damping, double size)

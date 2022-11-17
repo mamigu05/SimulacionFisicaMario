@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-//Constructora de la partícula
+//Constructora de la partï¿½cula
 Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damp, double _size, Vector4 _color, double inverse) : v(vel), a(acc), damping(damp), size(_size), inverse_mass(inverse)
 {
 	color = _color;
@@ -10,13 +10,13 @@ Particle::Particle(Vector3 pos, Vector3 vel, Vector3 acc, double damp, double _s
 	//death = GetCurrentTime() + time;
 }
 
-//Destructora de la partícula
+//Destructora de la partï¿½cula
 Particle::~Particle()
 {
 	DeregisterRenderItem(renderItem);
 }
 
-//Método que actualiza los vectores de la partícula
+//Mï¿½todo que actualiza los vectores de la partï¿½cula
 void Particle::update(double t)
 {
 	if (inverse_mass <= 0.0f)
@@ -35,15 +35,10 @@ void Particle::update(double t)
 	v *= powf(damping, t);*/
 }
 
-//Método que asigna un color a la partícula
+//Mï¿½todo que asigna un color a la partï¿½cula
 void Particle::setColor(Vector4 _color)
 {
 	renderItem->color = _color;
-}
-
-ParticleSystem::ParticleSystem()
-{
-
 }
 
 void ParticleSystem::update(double t)
@@ -83,7 +78,7 @@ void Fireworks::createFireworkRules()
 	rules[0]->setParameters(0, 5, 8, 0.8, 2, 0.99, Payload(1, 1));
 	//Cohete
 	rules[1]->setParameters(1, 1, 3, 0.99, 10, 0.99, Payload(2, 35));
-	//Explosión
+	//Explosiï¿½n
 	rules[2]->setParameters(2, 1, 3, 0.5, -5, 0.99, Payload(0, 1));
 
 	createFirework();
@@ -137,4 +132,46 @@ void Fireworks::fireworksUpdate(double t)
 		}
 	}
 	deleteFireworks();
+}
+
+void Forces::update(double t)
+{
+	if (timer > 30)
+	{
+		Vector3 pos;
+		Vector4 color;
+		if (type == 0)
+		{
+			pos = Vector3(-10, 0, 0);
+			color = Vector4(0, 1, 0, 1);
+		}
+		else if (type == 1)
+		{
+			pos = Vector3(0, 0, 0);
+			color = Vector4(1, 0, 0, 1);
+		}
+		else if (type == 2)
+		{
+			pos = Vector3(10, 0, 0);
+			color = Vector4(1, 0, 1, 1);
+		}
+		particles.push_back(new Particle(pos, Vector3(0, 10, 0), Vector3(0, 0, 0), 0.99, 1.0, color, 2));
+		timer = 0;
+	}
+
+	for (Particle* p : particles)
+	{
+		p->update(t);
+		if (p->pose.p.y < -10 || p->pose.p.y > 100)
+			particlesToDelete.push_back(p);
+	}
+
+	for (Particle* p : particlesToDelete) {
+		p->deleteReg = true;
+		particles.remove(p);
+		delete p;
+	}
+
+	timer++;
+	particlesToDelete.clear();
 }
