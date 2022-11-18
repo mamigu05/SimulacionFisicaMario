@@ -2,7 +2,7 @@
 #include <map>
 #include "ForceGenerator.h"
 
-const enum { GRAVITY, WIND };
+const enum { GRAVITY, WIND, EXPLOSION2 };
 
 typedef std::pair<ForceGenerator*, Particle*> FRPair;
 

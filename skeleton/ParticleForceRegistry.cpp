@@ -20,6 +20,8 @@ void ParticleForceRegistry::addRegistry(ForceGenerator* fg, Particle* p, int typ
 		p->gravity = true;
 	if (type == WIND)
 		p->wind = true;
+	if (type == EXPLOSION)
+		p->explosion = true;
 }
 
 void ParticleForceRegistry::deleteParticleRegistry(Particle* p)

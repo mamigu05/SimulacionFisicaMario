@@ -5,7 +5,7 @@ Scene::Scene()
 {
 	pFReg = new ParticleForceRegistry();
 	gravityB = nullptr; gravityR = nullptr; gravityY = nullptr;
-	wind = nullptr;
+	wind = nullptr; whirlwind = nullptr; explosion = nullptr;
 	forceB = nullptr; forceR = nullptr; forceY = nullptr;
 }
 
@@ -15,6 +15,8 @@ Scene::~Scene()
 	delete gravityR; gravityR = nullptr;
 	delete gravityY; gravityY = nullptr;
 	delete wind; wind = nullptr;
+	delete whirlwind; whirlwind = nullptr;
+	delete explosion; explosion = nullptr;
 	delete forceB; forceB = nullptr;
 	delete forceR; forceR = nullptr;
 	delete forceY; forceY = nullptr;
@@ -45,15 +47,23 @@ void Scene::createScene3()
 	scene = 3;
 	wind = new WindForceGenerator(Vector3(-50, 0, 0), Vector3(0, 50, 0), 20.0);
 	gravityB = new GravityForceGenerator(Vector3(0, 2, 0));
-	forceB = new Forces(1);
+	forceB = new Forces(0);
 }
 
 void Scene::createScene4()
 {
-	scene = 3;
-	wind = new WhirlwindForceGenerator();
+	scene = 4;
+	whirlwind = new WhirlwindForceGenerator();
 	gravityB = new GravityForceGenerator(Vector3(0, 2, 0));
-	forceB = new Forces(1);
+	forceB = new Forces(0);
+}
+
+void Scene::createScene5()
+{
+	scene = 5;
+	forceB = new Forces(0);
+	explosion = new ExplosionForceGenerator(Vector3(1000, 1000, 1000), Vector3(0, 50, 0), 30.0);
+
 }
 
 void Scene::update(double t)
@@ -80,10 +90,28 @@ void Scene::update(double t)
 	{
 		for (Particle* p : forceB->particles) 
 		{
-			if (!p->gravity) pFReg->addRegistry(gravityB, p, 0);
-			if (!p->wind) pFReg->addRegistry(wind, p, 1);
+			if (!p->gravity) 
+				pFReg->addRegistry(gravityB, p, 0);
+			if (!p->wind) 
+				pFReg->addRegistry(wind, p, 1);
 		}
 	}
-	/*if(scene != 2)*/
+	if (scene == 4)
+	{
+		for (Particle* p : forceB->particles)
+		{
+			if (!p->gravity)
+				pFReg->addRegistry(gravityB, p, 0);
+			if (!p->wind) 
+				pFReg->addRegistry(whirlwind, p, 1);
+		}
+	}
+	if (scene == 5) {
+		for (Particle* p : forceB->particles) {
+			if (!p->explosion) 
+				pFReg->addRegistry(explosion, p, 2);
+		}
+	}
+	if(scene != 5)
 		pFReg->updateForces(t);
 }
