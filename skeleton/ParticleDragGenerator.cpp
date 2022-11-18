@@ -8,8 +8,7 @@ void ParticleDragGenerator::updateForce(Particle* particle, double t)
 
 	Vector3 v = particle->v;
 	double drag_coef = v.normalize();
-	Vector3 dragF;
 	drag_coef = _k1 * drag_coef + _k2 * drag_coef * drag_coef;
-	dragF = -v * drag_coef;
-	particle->addForce(dragF);
+	v *= -drag_coef;
+	particle->addForce(v);
 }

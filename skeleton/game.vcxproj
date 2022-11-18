@@ -264,6 +264,7 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="WhirlwindForceGenerator.cpp" />
     <ClCompile Include="WindForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +280,7 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="WhirlwindForceGenerator.h" />
     <ClInclude Include="WindForceGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

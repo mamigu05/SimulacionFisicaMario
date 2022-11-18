@@ -143,7 +143,7 @@ void Forces::update(double t)
 		if (type == 0)
 		{
 			pos = Vector3(-10, 0, 0);
-			color = Vector4(0, 1, 0, 1);
+			color = Vector4(0, 0, 1, 1);
 		}
 		else if (type == 1)
 		{
@@ -153,7 +153,7 @@ void Forces::update(double t)
 		else if (type == 2)
 		{
 			pos = Vector3(10, 0, 0);
-			color = Vector4(1, 0, 1, 1);
+			color = Vector4(1, 0.8, 0, 1);
 		}
 		particles.push_back(new Particle(pos, Vector3(0, 10, 0), Vector3(0, 0, 0), 0.99, 1.0, color, 2));
 		timer = 0;

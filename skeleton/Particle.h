@@ -27,8 +27,8 @@ public:
 	//Vector de la velocidad de la part�cula
 	Vector3 v;
 
-	bool gravedad = false;
-	bool viento = false;
+	bool gravity = false;
+	bool wind = false;
 	bool explosion = false;
 	bool deleteReg = false;
 	//Constructora de la clase Particle

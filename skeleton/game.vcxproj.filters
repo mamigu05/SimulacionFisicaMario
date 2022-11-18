@@ -25,6 +25,9 @@
       <Filter>Forces</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="WhirlwindForceGenerator.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -54,6 +57,9 @@
       <Filter>Forces</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="WhirlwindForceGenerator.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

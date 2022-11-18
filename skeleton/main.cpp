@@ -59,7 +59,7 @@ void initPhysics(bool interactive)
 	//particles = new ParticleSystem();
 
 	fScene = new Scene();
-	fScene->createScene3();
+	fScene->createScene4();
 
 	/*gFirework = new Fireworks();
 	gFirework->createFireworkRules();*/
@@ -149,6 +149,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case '4':
 	{
 		gFirework->createFirework();
+		break;
+	}
+	case '5':
+	{
+		fScene->pFReg->updateForces(1);
 		break;
 	}
 	default:
