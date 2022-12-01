@@ -175,3 +175,19 @@ void Forces::update(double t)
 	timer++;
 	particlesToDelete.clear();
 }
+
+void ParticleSystem::generateSpringDemo()
+{
+	/*Particle* p1 = new Particle({ -10.0, 10.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 1.0, 0.0, 1.0 }, 60);
+	Particle* p2 = new Particle({ 10.0, 10.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 1.0, 0.0, 1.0 }, 60);
+	p2->setMass(2.0);
+	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
+	_force_registry.add(f1, p1);
+	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);
+	_force_registry.add(f2, p2);
+	_force_generators.push_back(f1);
+	_force_generators.push_back(f2);
+	_particles.push_back(p1);
+	_particles.push_back(p2);*/
+
+}

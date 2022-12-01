@@ -31,6 +31,16 @@
     <ClCompile Include="ExplosionForceGenerator.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
+    <ClCompile Include="SpringForceGenerator.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchoredSpringFG.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleBungee.cpp" />
+    <ClCompile Include="BuoyancyForceGenerator.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -64,6 +74,16 @@
       <Filter>Forces</Filter>
     </ClInclude>
     <ClInclude Include="ExplosionForceGenerator.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchoredSpringFG.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleBungee.h" />
+    <ClInclude Include="BuoyancyForceGenerator.h">
       <Filter>Forces</Filter>
     </ClInclude>
   </ItemGroup>

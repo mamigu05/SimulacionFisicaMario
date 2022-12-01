@@ -41,6 +41,7 @@ public:
 	void setColor(Vector4 _color);
 	bool hasFiniteMass() { return(inverse_mass > 0); }
 	double getMass() { return inverse_mass; }
+	void setMass(double mass) { inverse_mass = mass; }
 
 	void clearForce() { force *= 0; };
 	void addForce(const Vector3& f) { force += f; };
@@ -178,6 +179,7 @@ public:
 	ParticleSystem() { Generator::addGenerator(this); }
 	~ParticleSystem() { Generator::erase(); }
 	void update(double t);
+	void generateSpringDemo();
 };
 
 const enum {BLUE_GRAVITY, RED_GRAVITY, YELLOW_GRAVITY};

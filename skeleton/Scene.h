@@ -6,6 +6,8 @@
 #include "WindForceGenerator.h"
 #include "WhirlwindForceGenerator.h"
 #include "ExplosionForceGenerator.h"
+#include "AnchoredSpringFG.h"
+#include "BuoyancyForceGenerator.h"
 
 class Scene
 {
@@ -19,8 +21,11 @@ private:
 	Forces* forceB;
 	Forces* forceR;
 	Forces* forceY;
+	Particle* p1;
+	AnchoredSpringFG* asForce;
 
 	int scene;
+	bool force;
 public:
 	ParticleForceRegistry* pFReg;
 
@@ -31,7 +36,12 @@ public:
 	void createScene3();
 	void createScene4();
 	void createScene5();
+	void createScene6();
+	void createScene7();
+	void createScene8();
 	void update(double t);
+	void addK() { if (scene == 6) asForce->addK();}
+	void subK() { if (scene == 6) asForce->subK(); }
 	int getScene() { return scene; };
 };
 
