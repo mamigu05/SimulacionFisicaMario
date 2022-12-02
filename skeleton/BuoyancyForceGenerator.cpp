@@ -3,7 +3,7 @@
 
 BuoyancyForceGenerator::BuoyancyForceGenerator(double h, double v, double d) : height(h), volume(v), density(d)
 {
-	liquid_particle = new Particle({ 10, 40, 10 }, { 0, 0, 0 }, { 0, 0, 0 }, 0, 1, { 1.0, 0.0, 0.0, 1 }, 1);
+	liquid_particle = new Particle({ 10, 30, 10 }, { 0, 0, 0 }, { 0, 0, 0 }, 0, 1, { 1.0, 0.0, 0.0, 1 }, 1);
 }
 
 BuoyancyForceGenerator::~BuoyancyForceGenerator()

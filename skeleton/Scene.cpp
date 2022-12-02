@@ -67,32 +67,39 @@ void Scene::createScene5()
 
 void Scene::createScene6()
 {
-	scene = 6;
-	physx::PxTransform* posp = new physx::PxTransform(10, 45, 10);
+	//Almacena el valor de la constante del muelle
+	double k = askK();
+
+	//Cubo que se mantiene en posición estática
 	physx::PxTransform* pos = new physx::PxTransform(10, -5, 10);
 	RenderItem* m = new RenderItem(CreateShape(physx::PxBoxGeometry(2, 2, 2)), pos, {1, 0, 0, 1});
 
+	//Creación de la partícula anclada al muelle
 	p1 = new Particle({ 10, 45, 10 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 0.5, 0, 0.5, 1 }, 1);
-	asForce = new AnchoredSpringFG(5.0, 3.5, Vector3(10, 0, 10));
+
+	//Se crea la fuerza
+	asForce = new AnchoredSpringFG(1, 10, Vector3(10, 0, 10));
+	asForce->setK(k);
+	//Gravedad
 	gravityB = new GravityForceGenerator(Vector3(0, -3, 0));
 	pFReg->addRegistry(asForce, p1, 3);
 	pFReg->addRegistry(gravityB, p1, 0);
-	/*Particle* p = new Particle({ -10.0, 20.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 0.5, 0, 0.5, 1 }, 60);
-	AnchoredSpringFG* f = new AnchoredSpringFG(1, 10, { 10.0, 20.0, 0.0 });
-	pFReg->addRegistry(f, p, 3);*/
 }
 
 void Scene::createScene7()
 {
-	scene = 7;
+	//Se crean las dos partículas
 	Particle *p1, *p2;
 	p1 = new Particle({ 10.0, 45.0, 10.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 0.0, 0.0, 1.0 }, 1);
 	p2 = new Particle({ 10.0, 30.0, 10.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 0.0, 0.0, 1.0 }, 1);
-	SpringForceGenerator* f1 = new SpringForceGenerator(2.0, 3.5, p2);
-	pFReg->addRegistry(f1, p1, 3);
-	SpringForceGenerator* f2 = new SpringForceGenerator(2.0, 3.5, p1);
-	pFReg->addRegistry(f2, p2, 3);
+	
+	//Se crean las dos fuerzas y se aplican
+	SpringForceGenerator* sf1 = new SpringForceGenerator(2.0, 3.5, p2);
+	pFReg->addRegistry(sf1, p1, 3);
+	SpringForceGenerator* sf2 = new SpringForceGenerator(2.0, 3.5, p1);
+	pFReg->addRegistry(sf2, p2, 3);
 
+	//Se crea la gravedad que afectará a cada partícula
 	gravityB = new GravityForceGenerator(Vector3(0, -3, 0));
 	gravityY = new GravityForceGenerator(Vector3(0, 3, 0));
 	pFReg->addRegistry(gravityB, p1, 0);
@@ -101,13 +108,19 @@ void Scene::createScene7()
 
 void Scene::createScene8()
 {
+	//Creación de la partícula
 	Particle* p1;
-	physx::PxTransform* pos = new physx::PxTransform(10, 40, 10);
 	p1 = new Particle({ 10.0, 45.0, 10.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 0.0, 0.0, 1.0 }, 1);
+
+	//Representación visual del agua
+	physx::PxTransform* pos = new physx::PxTransform(10, 40, 10);
 	RenderItem* agua = new RenderItem(CreateShape(physx::PxBoxGeometry(10, 0.1, 10)), pos, Vector4(0, 0, 0.7, 1));
+	
+	//Gravedad
 	gravityB = new GravityForceGenerator(Vector3(0, -10, 0));
 
-	BuoyancyForceGenerator* bForce = new BuoyancyForceGenerator(15, 15, 5);
+	//Fuerza de flotación
+	BuoyancyForceGenerator* bForce = new BuoyancyForceGenerator(15, 15, 1);
 	pFReg->addRegistry(bForce, p1, 4);
 	pFReg->addRegistry(gravityB, p1, 0);
 }
@@ -160,4 +173,13 @@ void Scene::update(double t)
 	}
 	if(scene != 5)
 		pFReg->updateForces(t);
+}
+
+//Método que pregunta y devuelve un valor
+double Scene::askK()
+{
+	double value;
+	std::cout << "¿Qué valor quiere que tenga la constante del muelle?\n";
+	cin >> value;
+	return value;
 }

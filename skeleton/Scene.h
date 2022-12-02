@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "core.hpp"
 #include "Particle.h"
 #include "GravityForceGenerator.h"
@@ -42,6 +43,7 @@ public:
 	void update(double t);
 	void addK() { if (scene == 6) asForce->addK();}
 	void subK() { if (scene == 6) asForce->subK(); }
+	double askK();
 	int getScene() { return scene; };
 };
 

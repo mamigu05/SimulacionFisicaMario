@@ -59,7 +59,7 @@ void initPhysics(bool interactive)
 	//particles = new ParticleSystem();
 
 	fScene = new Scene();
-	fScene->createScene8();
+	fScene->createScene6();
 
 	/*gFirework = new Fireworks();
 	gFirework->createFireworkRules();*/
@@ -159,11 +159,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case '6':
 	{
+		//Llama al método para sumarle valor a la constante elástica
 		fScene->addK();
 		break;
 	}
 	case '7':
 	{
+		//Llama al método para restarle valor a la constante elástica
 		fScene->subK();
 		break;
 	}
