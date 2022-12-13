@@ -264,6 +264,9 @@
     <ClCompile Include="ParticleBungee.cpp" />
     <ClCompile Include="ParticleDragGenerator.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
+    <ClCompile Include="RBForceGenerator.cpp" />
+    <ClCompile Include="RBSystem.cpp" />
+    <ClCompile Include="RBWindForceGenerator.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
@@ -285,6 +288,9 @@
     <ClInclude Include="ParticleBungee.h" />
     <ClInclude Include="ParticleDragGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
+    <ClInclude Include="RBForceGenerator.h" />
+    <ClInclude Include="RBSystem.h" />
+    <ClInclude Include="RBWindForceGenerator.h" />
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />

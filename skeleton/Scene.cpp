@@ -70,11 +70,11 @@ void Scene::createScene6()
 	//Almacena el valor de la constante del muelle
 	double k = askK();
 
-	//Cubo que se mantiene en posición estática
+	//Cubo que se mantiene en posiciï¿½n estï¿½tica
 	physx::PxTransform* pos = new physx::PxTransform(10, -5, 10);
 	RenderItem* m = new RenderItem(CreateShape(physx::PxBoxGeometry(2, 2, 2)), pos, {1, 0, 0, 1});
 
-	//Creación de la partícula anclada al muelle
+	//Creaciï¿½n de la partï¿½cula anclada al muelle
 	p1 = new Particle({ 10, 45, 10 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 0.5, 0, 0.5, 1 }, 1);
 
 	//Se crea la fuerza
@@ -88,7 +88,7 @@ void Scene::createScene6()
 
 void Scene::createScene7()
 {
-	//Se crean las dos partículas
+	//Se crean las dos partï¿½culas
 	Particle *p1, *p2;
 	p1 = new Particle({ 10.0, 45.0, 10.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 0.0, 0.0, 1.0 }, 1);
 	p2 = new Particle({ 10.0, 30.0, 10.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 0.0, 0.0, 1.0 }, 1);
@@ -99,7 +99,7 @@ void Scene::createScene7()
 	SpringForceGenerator* sf2 = new SpringForceGenerator(2.0, 3.5, p1);
 	pFReg->addRegistry(sf2, p2, 3);
 
-	//Se crea la gravedad que afectará a cada partícula
+	//Se crea la gravedad que afectarï¿½ a cada partï¿½cula
 	gravityB = new GravityForceGenerator(Vector3(0, -3, 0));
 	gravityY = new GravityForceGenerator(Vector3(0, 3, 0));
 	pFReg->addRegistry(gravityB, p1, 0);
@@ -108,18 +108,18 @@ void Scene::createScene7()
 
 void Scene::createScene8()
 {
-	//Creación de la partícula
+	//Creaciï¿½n de la partï¿½cula
 	Particle* p1;
 	p1 = new Particle({ 10.0, 45.0, 10.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 0.0, 0.0, 1.0 }, 1);
 
-	//Representación visual del agua
+	//Representaciï¿½n visual del agua
 	physx::PxTransform* pos = new physx::PxTransform(10, 40, 10);
 	RenderItem* agua = new RenderItem(CreateShape(physx::PxBoxGeometry(10, 0.1, 10)), pos, Vector4(0, 0, 0.7, 1));
 	
 	//Gravedad
 	gravityB = new GravityForceGenerator(Vector3(0, -10, 0));
 
-	//Fuerza de flotación
+	//Fuerza de flotaciï¿½n
 	BuoyancyForceGenerator* bForce = new BuoyancyForceGenerator(15, 15, 1);
 	pFReg->addRegistry(bForce, p1, 4);
 	pFReg->addRegistry(gravityB, p1, 0);
@@ -175,11 +175,11 @@ void Scene::update(double t)
 		pFReg->updateForces(t);
 }
 
-//Método que pregunta y devuelve un valor
+//Mï¿½todo que pregunta y devuelve un valor
 double Scene::askK()
 {
 	double value;
-	std::cout << "¿Qué valor quiere que tenga la constante del muelle?\n";
+	std::cout << "ï¿½Quï¿½ valor quiere que tenga la constante del muelle?\n";
 	cin >> value;
 	return value;
 }

@@ -159,13 +159,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case '6':
 	{
-		//Llama al método para sumarle valor a la constante elástica
+		//Llama al mï¿½todo para sumarle valor a la constante elï¿½stica
 		fScene->addK();
 		break;
 	}
 	case '7':
 	{
-		//Llama al método para restarle valor a la constante elástica
+		//Llama al mï¿½todo para restarle valor a la constante elï¿½stica
 		fScene->subK();
 		break;
 	}

@@ -41,6 +41,15 @@
     <ClCompile Include="BuoyancyForceGenerator.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
+    <ClCompile Include="RBForceGenerator.cpp">
+      <Filter>RB</Filter>
+    </ClCompile>
+    <ClCompile Include="RBSystem.cpp">
+      <Filter>RB</Filter>
+    </ClCompile>
+    <ClCompile Include="RBWindForceGenerator.cpp">
+      <Filter>RB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -86,6 +95,15 @@
     <ClInclude Include="BuoyancyForceGenerator.h">
       <Filter>Forces</Filter>
     </ClInclude>
+    <ClInclude Include="RBForceGenerator.h">
+      <Filter>RB</Filter>
+    </ClInclude>
+    <ClInclude Include="RBSystem.h">
+      <Filter>RB</Filter>
+    </ClInclude>
+    <ClInclude Include="RBWindForceGenerator.h">
+      <Filter>RB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -93,6 +111,9 @@
     </Filter>
     <Filter Include="Forces">
       <UniqueIdentifier>{146bbd38-007d-40c8-8946-8777d81eda5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RB">
+      <UniqueIdentifier>{5a88629b-c2b9-40be-bbfd-ffa4005e0cc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

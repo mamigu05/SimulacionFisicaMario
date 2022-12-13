@@ -1,7 +1,7 @@
 #include "SpringForceGenerator.h"
 #include "Particle.h"
 
-//Método que actualiza los valores de la fuerza
+//Mï¿½todo que actualiza los valores de la fuerza
 void SpringForceGenerator::updateForce(Particle* particle, double t)
 {
 	Vector3 force = other->pose.p - particle->pose.p;
