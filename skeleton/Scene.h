@@ -9,6 +9,11 @@
 #include "ExplosionForceGenerator.h"
 #include "AnchoredSpringFG.h"
 #include "BuoyancyForceGenerator.h"
+#include "RBSystem.h"
+#include "RBTorqueForceGenerator.h"
+#include "RBWindForceGenerator.h"
+#include "RBExplosionForceGenerator.h"
+#include "RBForceRegistry.h"
 
 class Scene
 {
@@ -24,11 +29,16 @@ private:
 	Forces* forceY;
 	Particle* p1;
 	AnchoredSpringFG* asForce;
+	RBSystem* rbSystem;
+	RBWindForceGenerator* rbWind;
+	RBTorqueForceGenerator* rbTorque;
+	RBExplosionForceGenerator* rbExplosion;
 
 	int scene;
 	bool force;
 public:
 	ParticleForceRegistry* pFReg;
+	RBForceRegistry* rbFReg;
 
 	Scene();
 	~Scene();
@@ -40,6 +50,8 @@ public:
 	void createScene6();
 	void createScene7();
 	void createScene8();
+	void createSceneRB1(PxPhysics* _physics, PxScene* _scene);
+	void createSceneRB2(PxPhysics* _physics, PxScene* _scene);
 	void update(double t);
 	void addK() { if (scene == 6) asForce->addK();}
 	void subK() { if (scene == 6) asForce->subK(); }

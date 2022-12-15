@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "ForceGenerator.h"
+#include "RBForceGenerator.h"
 
 const enum { GRAVITY, WIND, EXPLOSION2 };
 

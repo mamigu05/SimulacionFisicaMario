@@ -58,9 +58,6 @@ void initPhysics(bool interactive)
 	//gParticle = new Particle(Vector3(0.0, 0.0, 0.0), Vector3(0.0, 5.0, 3.0), Vector3(0.0, 2.0, 2.0), 0.99);
 	//particles = new ParticleSystem();
 
-	fScene = new Scene();
-	fScene->createScene6();
-
 	/*gFirework = new Fireworks();
 	gFirework->createFireworkRules();*/
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
@@ -71,6 +68,8 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+	fScene = new Scene();
+	fScene->createSceneRB2(gPhysics, gScene);
 	}
 
 
@@ -155,6 +154,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		if(fScene->getScene() == 5)
 			fScene->pFReg->updateForces(1);
+		if (fScene->getScene() == 10)
+			fScene->rbFReg->updateForces(1);
 		break;
 	}
 	case '6':

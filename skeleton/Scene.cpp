@@ -4,6 +4,7 @@
 Scene::Scene()
 {
 	pFReg = new ParticleForceRegistry();
+	rbFReg = new RBForceRegistry();
 	gravityB = nullptr; gravityR = nullptr; gravityY = nullptr;
 	wind = nullptr; whirlwind = nullptr; explosion = nullptr;
 	forceB = nullptr; forceR = nullptr; forceY = nullptr;
@@ -125,6 +126,43 @@ void Scene::createScene8()
 	pFReg->addRegistry(gravityB, p1, 0);
 }
 
+void Scene::createSceneRB1(PxPhysics* _physics, PxScene* _scene) 
+{
+	scene = 9;
+
+	PxShape* shape = CreateShape(PxBoxGeometry(50, 1, 50));
+	PxRigidStatic* ground = _physics->createRigidStatic({ 0, 0, 0 });
+	ground->attachShape(*shape);
+	_scene->addActor(*ground);
+	RenderItem* ri = nullptr;
+	ri = new RenderItem(shape, ground, { 0, 0.4, 0.7, 1 });
+
+	rbSystem = new RBSystem(_physics, _scene, PxTransform(0, 40, 10));
+
+	rbWind = new RBWindForceGenerator({ 0.0f, 1000.0f, 1000.0f });
+	rbTorque = new RBTorqueForceGenerator({ 0.0f, 1000.0f, 1000.0f });
+
+	forceY = new Forces(2);
+	wind = new WindForceGenerator(Vector3(-100, 0, 0), Vector3(0, 25, 0), 20.0f);
+	gravityB = new GravityForceGenerator(Vector3(0, 4, 0));
+}
+
+void Scene::createSceneRB2(PxPhysics* _physics, PxScene* _scene)
+{
+	scene = 10;
+
+	PxShape* shape = CreateShape(PxBoxGeometry(100, 1, 100));
+	PxRigidStatic* ground = _physics->createRigidStatic({ 0, 0, 0 });
+	ground->attachShape(*shape);
+	_scene->addActor(*ground);
+	RenderItem* ri = nullptr;
+	ri = new RenderItem(shape, ground, { 0.6, 0.2, 1, 1 });
+
+	rbSystem = new RBSystem(_physics, _scene, PxTransform(0, 40, 0));
+	rbExplosion = new RBExplosionForceGenerator(Vector3(100000, 100000, 100000), Vector3(0, 25, 0), 20.0f);
+	rbTorque = new RBTorqueForceGenerator({ 0.0f, 1000.0f, 0.0f });
+}
+
 void Scene::update(double t)
 {
 	if (forceB != nullptr)
@@ -170,6 +208,21 @@ void Scene::update(double t)
 			if (!p->explosion) 
 				pFReg->addRegistry(explosion, p, 2);
 		}
+	}
+	if (scene == 9) 
+	{
+		rbFReg->addRegistry(rbWind, rbTorque, rbSystem);
+		rbSystem->update(t);
+
+		for (Particle* particle : forceY->particles) {
+			if (!particle->wind)
+				pFReg->addRegistry(wind, particle, 1);
+		}
+	}
+	if (scene == 10)
+	{
+		rbFReg->addRegistry(rbExplosion, rbTorque, rbSystem);
+		rbSystem->update(t);
 	}
 	if(scene != 5)
 		pFReg->updateForces(t);

@@ -50,6 +50,15 @@
     <ClCompile Include="RBWindForceGenerator.cpp">
       <Filter>RB</Filter>
     </ClCompile>
+    <ClCompile Include="RBTorqueForceGenerator.cpp">
+      <Filter>RB</Filter>
+    </ClCompile>
+    <ClCompile Include="RBForceRegistry.cpp">
+      <Filter>RB</Filter>
+    </ClCompile>
+    <ClCompile Include="RBExplosionForceGenerator.cpp">
+      <Filter>RB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -102,6 +111,15 @@
       <Filter>RB</Filter>
     </ClInclude>
     <ClInclude Include="RBWindForceGenerator.h">
+      <Filter>RB</Filter>
+    </ClInclude>
+    <ClInclude Include="RBTorqueForceGenerator.h">
+      <Filter>RB</Filter>
+    </ClInclude>
+    <ClInclude Include="RBForceRegistry.h">
+      <Filter>RB</Filter>
+    </ClInclude>
+    <ClInclude Include="RBExplosionForceGenerator.h">
       <Filter>RB</Filter>
     </ClInclude>
   </ItemGroup>
