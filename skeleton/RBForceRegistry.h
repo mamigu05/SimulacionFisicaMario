@@ -5,6 +5,7 @@
 
 typedef std::pair<RBForceGenerator*, RB*> FRPair2;
 
+//Clase que registra las fuerzas aplicadas a cada sólido rígido
 class RBForceRegistry : public std::multimap<RBForceGenerator*, RB*>
 {
 public:

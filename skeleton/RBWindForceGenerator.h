@@ -1,6 +1,7 @@
 #pragma once
 #include "RBForceGenerator.h"
 
+//Clase que simula un viento que afecta a sólidos rígidos
 class RBWindForceGenerator : public RBForceGenerator
 {
 	Vector3 wind;

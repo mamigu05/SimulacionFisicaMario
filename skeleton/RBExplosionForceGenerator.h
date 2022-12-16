@@ -1,6 +1,7 @@
 #pragma once
 #include "RBForceGenerator.h"
 
+//Clase que simula una explosión que afecta a sólidos rígidos
 class RBExplosionForceGenerator : public RBForceGenerator
 {
 public:

@@ -15,8 +15,6 @@ void RBForceRegistry::updateForces(double t)
 
 void RBForceRegistry::addRegistry(RBForceGenerator* rbFGw, RBForceGenerator* rbFGt, RBSystem* rb)
 {
-	/*this->insert(FRPair2(rbFG, rb));
-	this->insert(FRPair2(rbFGt, rb));*/
 	for (int i = rb->bodies.size() - 1; i >= 0; i--) {
 		if (rb->bodies.at(i)->isNew) {
 			this->insert(FRPair2(rbFGw, rb->bodies.at(i)));

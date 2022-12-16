@@ -130,6 +130,7 @@ void Scene::createSceneRB1(PxPhysics* _physics, PxScene* _scene)
 {
 	scene = 9;
 
+	//Crea un suelo en la escena
 	PxShape* shape = CreateShape(PxBoxGeometry(50, 1, 50));
 	PxRigidStatic* ground = _physics->createRigidStatic({ 0, 0, 0 });
 	ground->attachShape(*shape);
@@ -137,10 +138,19 @@ void Scene::createSceneRB1(PxPhysics* _physics, PxScene* _scene)
 	RenderItem* ri = nullptr;
 	ri = new RenderItem(shape, ground, { 0, 0.4, 0.7, 1 });
 
+	//Crea un cubo como obstáculo en la escena
+	PxShape* shape2 = CreateShape(PxBoxGeometry(5, 5, 5));
+	PxRigidStatic* block = _physics->createRigidStatic({ -10, 5, -5 });
+	block->attachShape(*shape2);
+	_scene->addActor(*block);
+	RenderItem* ri2 = nullptr;
+	ri2 = new RenderItem(shape2, block, { 1, 0, 0.7, 1 });
+
+	//Sistema de rb
 	rbSystem = new RBSystem(_physics, _scene, PxTransform(0, 40, 10));
 
-	rbWind = new RBWindForceGenerator({ 0.0f, 1000.0f, 1000.0f });
-	rbTorque = new RBTorqueForceGenerator({ 0.0f, 1000.0f, 1000.0f });
+	rbWind = new RBWindForceGenerator({ 0.0f, 0.0f, 0.0f });
+	rbTorque = new RBTorqueForceGenerator({ 1000.0f, 0.0f, 0.0f });
 
 	forceY = new Forces(2);
 	wind = new WindForceGenerator(Vector3(-100, 0, 0), Vector3(0, 25, 0), 20.0f);
@@ -150,7 +160,8 @@ void Scene::createSceneRB1(PxPhysics* _physics, PxScene* _scene)
 void Scene::createSceneRB2(PxPhysics* _physics, PxScene* _scene)
 {
 	scene = 10;
-
+	
+	//Crea un suelo en la escena
 	PxShape* shape = CreateShape(PxBoxGeometry(100, 1, 100));
 	PxRigidStatic* ground = _physics->createRigidStatic({ 0, 0, 0 });
 	ground->attachShape(*shape);
@@ -158,9 +169,9 @@ void Scene::createSceneRB2(PxPhysics* _physics, PxScene* _scene)
 	RenderItem* ri = nullptr;
 	ri = new RenderItem(shape, ground, { 0.6, 0.2, 1, 1 });
 
+	//Sistema de rb
 	rbSystem = new RBSystem(_physics, _scene, PxTransform(0, 40, 0));
 	rbExplosion = new RBExplosionForceGenerator(Vector3(100000, 100000, 100000), Vector3(0, 25, 0), 20.0f);
-	rbTorque = new RBTorqueForceGenerator({ 0.0f, 1000.0f, 0.0f });
 }
 
 void Scene::update(double t)
@@ -211,8 +222,10 @@ void Scene::update(double t)
 	}
 	if (scene == 9) 
 	{
+		//Se registran las fuerzas y actualiza el sistema de rb
 		rbFReg->addRegistry(rbWind, rbTorque, rbSystem);
 		rbSystem->update(t);
+		rbFReg->updateForces(t);
 
 		for (Particle* particle : forceY->particles) {
 			if (!particle->wind)

@@ -1,6 +1,7 @@
 #include "RBSystem.h"
 #include <iostream>
 
+//Constructora de la clase con sus parámetros "set"
 RBSystem::RBSystem(PxPhysics* _physics, PxScene* _scene, PxTransform _p, bool _colorRB, double _step, double _life, double _size, int _maxParticles, Vector4 _color) 
 	: physics(_physics), scene(_scene), p(_p), colorRB(_colorRB), step(_step), life(_life), size(_size), maxParticles(_maxParticles), color(_color)
 {
@@ -8,12 +9,14 @@ RBSystem::RBSystem(PxPhysics* _physics, PxScene* _scene, PxTransform _p, bool _c
 	numParticles = 0;
 }
 
+//Destructora de la clase
 RBSystem::~RBSystem()
 {
 	delete physics;
 	physics = nullptr;
 }
 
+//Método que añade el sólido rígido al mundo
 void RBSystem::addBody()
 {
 	if (colorRB) {
@@ -33,10 +36,10 @@ void RBSystem::addBody()
 	new_solid->setAngularVelocity({ 0, 0, 0 });
 	new_solid->setAngularDamping(0.05);
 	
-	//new_solid->setMassSpaceInertiaTensor({ size * size, size * size, size * size });
 	PxRigidBodyExt::updateMassAndInertia(*new_solid, 10);
 	scene->addActor(*new_solid);
 
+	//Se asignan los parámetros al rb
 	body->rDynamic = new_solid;
 	body->isNew = true;
 	body->life = life;
@@ -48,8 +51,10 @@ void RBSystem::addBody()
 	time = 0;
 }
 
+//Update del rb
 void RBSystem::update(double t)
 {
+	//Determinado un tiempo, se añade un nuevo rb
 	time += t;
 	if (time > step && numParticles < maxParticles)
 		addBody();
@@ -59,10 +64,12 @@ void RBSystem::update(double t)
 			(*it)->rDynamic->addForce((*it)->force, PxForceMode::eFORCE);
 			(*it)->force = { 0.0f, 0.0f, 0.0f };
 
+			//Torque del rb
 			(*it)->rDynamic->addTorque((*it)->torque);
 			(*it)->torque = { 0.0f, 0.0f, 0.0f };
 
 			(*it)->life -= t;
+			//Si la vida llega a su fin, se elimina
 			if ((*it)->life < 0) it = remove(it);
 		}
 	}

@@ -1,6 +1,7 @@
 #pragma once
 #include "RBSystem.h"
 
+//Clase que sirve como generador de fuerzas de sólidos rígidos
 class RBForceGenerator
 {
 public:

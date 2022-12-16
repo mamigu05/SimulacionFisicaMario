@@ -2,6 +2,7 @@
 
 #include "RBForceGenerator.h"
 
+//Clase que se encarga de la rotación del cuerpo causada por su momento
 class RBTorqueForceGenerator : public RBForceGenerator
 {
 	Vector3 torque;

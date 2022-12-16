@@ -4,7 +4,7 @@
 
 using namespace physx;
 
-
+//Struct del sólido rígido con sus parámetros
 struct RB
 {
 	PxRigidDynamic* rDynamic = nullptr;
@@ -15,6 +15,7 @@ struct RB
 	bool isNew;
 };
 
+//Clase que crea el sólido rígido con sus parámetros y los añade en el mundo
 class RBSystem
 {
 private:
@@ -28,7 +29,7 @@ private:
 	std::vector<RB*>::iterator remove(std::vector<RB*>::iterator it);
 
 public:
-	RBSystem(PxPhysics* _physics, PxScene* _scene, PxTransform _p, bool _colorRB = true, double _step = 1.5, double _life = 15, double _size = 1, int _maxParticles = 10, Vector4 _color = { 1, 0, 0, 1.0 });
+	RBSystem(PxPhysics* _physics, PxScene* _scene, PxTransform _p, bool _colorRB = true, double _step = 1.5, double _life = 10, double _size = 1.5, int _maxParticles = 10, Vector4 _color = { 1, 0, 0, 1.0 });
 	~RBSystem();
 	void addBody();
 	void update(double t);
