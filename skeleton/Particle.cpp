@@ -24,7 +24,7 @@ void Particle::update(double t)
 	pose.p += v * t;
 
 	Vector3 totalAcceleration = a;
-	totalAcceleration += force * inverse_mass;
+	totalAcceleration += force * (1 / inverse_mass);
 
 	v += totalAcceleration * t;
 	v *= powf(damping, t);
@@ -41,16 +41,37 @@ void Particle::setColor(Vector4 _color)
 	renderItem->color = _color;
 }
 
-void ParticleSystem::update(double t)
+void ParticleSystem::update(double t, int i)
 {
-	v = Vector3((rand() % 50 - 25), 25, (rand() % 50 - 25));
+	timer++;
+	if (i == 0)
+	{
+		v = Vector3((rand() % 50 - 25), (rand() % 50 - 25), 25);
 
-	_particles.push_back(new Particle(Vector3(0.0, 0.0, 0.0), v, Vector3(0, -9.8, 0), 0.99, 1.0, { 1.0, 1.0, 0.0, 1.0 }, 0));
+		_particles.push_back(new Particle(posicion, v, Vector3(0, -9.8, 0), 0.99, 0.75, color, 1));
 
-	for (Particle* p : _particles) {
-		p->update(t);
-		if (p->pose.p.y < -20)
-			_particlesToDelete.emplace_back(p);
+		for (Particle* p : _particles)
+		{
+			p->update(t);
+			if (p->pose.p.z > posicion.z + 40)
+				_particlesToDelete.emplace_back(p);
+		}
+	}
+
+	if (i == 1)
+	{
+		if (timer < 40)
+		{
+			v = Vector3((rand() % 50 - 25), 25, (rand() % 50 - 25));
+			_particles.push_back(new Particle(posicion, v, Vector3(0, -9.8, 0), 0.99, 0.75, color, 1));
+		}
+		for (Particle* p : _particles)
+		{
+			p->update(t);
+			if (p->pose.p.y > posicion.y + 20)
+				_particlesToDelete.emplace_back(p);
+		}
+		
 	}
 
 	for (Particle* p : _particlesToDelete) {
@@ -75,11 +96,11 @@ void Fireworks::createFireworkRules()
 		rules.push_back(new FireworkRule());
 
 	//Ceniza
-	rules[0]->setParameters(0, 5, 8, 0.8, 2, 0.99, Payload(1, 1));
+	rules[0]->setParameters(0, 3, 6, Vector3(-1, -10, -1), Vector3(1, 10, 1), 0.8, Payload(1, 1));
 	//Cohete
-	rules[1]->setParameters(1, 1, 3, 0.99, 10, 0.99, Payload(2, 35));
+	rules[1]->setParameters(1, 2, 4, Vector3(0, 100, 0), Vector3(0, 170, 0), 0.99, Payload(2, 105));
 	//Explosi�n
-	rules[2]->setParameters(2, 1, 3, 0.5, -5, 0.99, Payload(0, 1));
+	rules[2]->setParameters(2, 1, 3, Vector3(-60, -60, -60), Vector3(60, 60, 60), 0.5, Payload(0, 2));
 
 	createFirework();
 }
@@ -155,6 +176,11 @@ void Forces::update(double t)
 			pos = Vector3(10, 0, 0);
 			color = Vector4(1, 0.8, 0, 1);
 		}
+		else if (type == 3)
+		{
+			pos = Vector3((float)(rand() % 800) - 400, -5, (float)(rand() % 800) - 400);
+			color = Vector4(1, 1, 1, 1);
+		}
 		particles.push_back(new Particle(pos, Vector3(0, 10, 0), Vector3(0, 0, 0), 0.99, 1.0, color, 2));
 		timer = 0;
 	}
@@ -162,7 +188,7 @@ void Forces::update(double t)
 	for (Particle* p : particles)
 	{
 		p->update(t);
-		if (p->pose.p.y < -10 || p->pose.p.y > 100)
+		if (p->pose.p.y < -10 || p->pose.p.y > 1000)
 			particlesToDelete.push_back(p);
 	}
 
@@ -174,20 +200,4 @@ void Forces::update(double t)
 
 	timer++;
 	particlesToDelete.clear();
-}
-
-void ParticleSystem::generateSpringDemo()
-{
-	/*Particle* p1 = new Particle({ -10.0, 10.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 1.0, 0.0, 1.0 }, 60);
-	Particle* p2 = new Particle({ 10.0, 10.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, 0.85, 1, { 1.0, 1.0, 0.0, 1.0 }, 60);
-	p2->setMass(2.0);
-	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
-	_force_registry.add(f1, p1);
-	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);
-	_force_registry.add(f2, p2);
-	_force_generators.push_back(f1);
-	_force_generators.push_back(f2);
-	_particles.push_back(p1);
-	_particles.push_back(p2);*/
-
 }

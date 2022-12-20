@@ -22,6 +22,13 @@ void RBForceRegistry::addRegistry(RBForceGenerator* rbFGw, RBForceGenerator* rbF
 			rb->bodies.at(i)->isNew = false;
 		}
 	}
+	/*for (auto it = rb->bodies.begin(); it != rb->bodies.end(); it++) {
+		if ((*it)->isNew) {
+			this->insert(FRPair2(rbFGw, (*it)));
+			this->insert(FRPair2(rbFGt, (*it)));
+			(*it)->isNew = false;
+		}
+	}*/
 }
 
 void RBForceRegistry::deleteRBRegistry(RB* rb)

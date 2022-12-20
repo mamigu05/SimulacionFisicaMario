@@ -69,7 +69,8 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 	fScene = new Scene();
-	fScene->createSceneRB2(gPhysics, gScene);
+	fScene->createFinalScene(gPhysics, gScene);
+	//fScene->createScene8();
 	}
 
 
@@ -132,22 +133,24 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case '1':
 	{
-		shoot({ 1.0, 1.0, 0.0, 1.0 }, Vector3(0.0, -3.0, 0.0), 50, 0.99, 1.0);
+		fScene->exp();
+		//shoot({ 1.0, 1.0, 0.0, 1.0 }, Vector3(0.0, -3.0, 0.0), 50, 0.99, 1.0);
 		break;
 	}
 	case '2':
 	{
-		shoot({ 0.1, 0.1, 0.1, 1.0 }, Vector3(0.0, -6.0, 0.0), 35, 0.99, 4.0);
+		fScene->addRB(PxTransform(GetCamera()->getTransform().p), GetCamera()->getDir() * 250);
+		//shoot({ 0.1, 0.1, 0.1, 1.0 }, Vector3(0.0, -6.0, 0.0), 35, 0.99, 4.0);
 		break;
 	}
 	case '3':
 	{
-		shoot({ 1.0, 0.5, 0.0, 1.0 }, Vector3(0.0, 0.1, 0.0), 5, 0.99, 1.0);
+		//shoot({ 1.0, 0.5, 0.0, 1.0 }, Vector3(0.0, 0.1, 0.0), 5, 0.99, 1.0);
 		break;
 	}
 	case '4':
 	{
-		gFirework->createFirework();
+		//gFirework->createFirework();
 		break;
 	}
 	case '5':

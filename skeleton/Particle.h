@@ -90,14 +90,14 @@ class Fireworks : public Generator
 		//Rango de vida de la part�cula
 		int minAge, maxAge;
 		//Velocidad de la part�cula
-		int minVelocity, maxVelocity;
+		Vector3 minVelocity, maxVelocity;
 		//Damping de la part�cula
 		double damping;
 		//Vector de payloads
 		vector<Payload> payloads;
 
 		//M�todo que atribuye valores a una regla
-		void setParameters(unsigned _type, int _min, int _max, int _minVel, int _maxVel, double _damping, Payload _payload)
+		void setParameters(unsigned _type, int _min, int _max, Vector3 _minVel, Vector3 _maxVel, double _damping, Payload _payload)
 		{
 			type = _type;
 			minAge = _min;
@@ -130,16 +130,21 @@ class Fireworks : public Generator
 			if (parent != NULL)
 			{
 				firework->pose = parent->pose;
-				if(type == 0)
+				/*if(type == 0)
 					v = Vector3((rand() % maxVelocity - minVelocity) / 10, -2, (rand() % maxVelocity - minVelocity) / 10);
 				else if(type == 2)
-					v = Vector3((rand() % maxVelocity - minVelocity), (rand() % 10 - 5), (rand() % maxVelocity - minVelocity));
+					v = Vector3((rand() % maxVelocity - minVelocity), (rand() % 10 - 5), (rand() % maxVelocity - minVelocity));*/
 			}
 			else
 			{
-				firework->pose = physx::PxTransform(15.0, 15.0f, 15.0f);
-				v = Vector3((rand() % (maxVelocity / 2) - (minVelocity / 2)), 15, (rand() % (maxVelocity / 2) - (minVelocity / 2)));
+				/*firework->pose = physx::PxTransform(15.0, 15.0f, 15.0f);
+				v = Vector3((rand() % (maxVelocity / 2) - (minVelocity / 2)), 15, (rand() % (maxVelocity / 2) - (minVelocity / 2)));*/
+				physx::PxTransform pxt = physx::PxTransform(0.0f, 10.0f, 200.0f);
+				firework->pose = pxt;
 			}
+			v.x = (float)rand() / RAND_MAX * (maxVelocity.x - minVelocity.x) + minVelocity.x;
+			v.y = (float)rand() / RAND_MAX * (maxVelocity.y - minVelocity.y) + minVelocity.y;
+			v.z = (float)rand() / RAND_MAX * (maxVelocity.z - minVelocity.z) + minVelocity.z;
 			firework->v = v;
 		}
 	};
@@ -149,9 +154,10 @@ private:
 	vector<FireworkRule*> rules;
 	//Vector que guarda los fireworks creados
 	vector<Firework*> fireworks;
+	int type;
 
 public:
-	Fireworks() { Generator::addGenerator(this); }
+	Fireworks(int _type = 0) { Generator::addGenerator(this); type = _type; }
 	//M�todo que inicializa las reglas y dispara un firework
 	void createFireworkRules();
 	//M�todo que elimina los punteros a firework
@@ -165,7 +171,7 @@ public:
 	//M�todo que actualiza los fuegos artificiales
 	void fireworksUpdate(double t);
 	//M�todo que dispara un nuevo firework
-	void createFirework() { fireworksCreate(Payload(1, 3)); };
+	void createFirework() { fireworksCreate(Payload(1, 1)); };
 };
 
 class ParticleSystem : public Generator
@@ -174,12 +180,14 @@ protected:
 	Vector3 v;
 	list<Particle*> _particles;
 	list<Particle*> _particlesToDelete;
+	Vector3 posicion;
+	Vector4 color;
+	double timer;
 	//std::list<ParticleGenerator*> _particleGenerators;
 public:
-	ParticleSystem() { Generator::addGenerator(this); }
+	ParticleSystem(Vector3 _pose, Vector4 _color) { Generator::addGenerator(this); posicion = _pose; color = _color; timer = 0; }
 	~ParticleSystem() { Generator::erase(); }
-	void update(double t);
-	void generateSpringDemo();
+	void update(double t, int i);
 };
 
 const enum {BLUE_GRAVITY, RED_GRAVITY, YELLOW_GRAVITY};
